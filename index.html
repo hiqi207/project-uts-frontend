@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistem Manajemen Data Lahan dan Tanaman">
+    <title>Sistem Manajemen Lahan dan Tanaman</title>
+
+    <!-- CSS utama -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>AgriManage</h1>
+            <p>Sistem Manajemen Data Lahan dan Tanaman</p>
+        </div>
+    </header>
+
+    <!-- Navigasi -->
+    <nav class="navbar" aria-label="Navigasi utama">
+        <div class="container nav-links">
+            <a href="#dashboard">Dashboard</a>
+            <a href="#data-lahan">Data Lahan</a>
+            <a href="#data-tanaman">Data Tanaman</a>
+        </div>
+    </nav>
+
+    <!-- Konten utama -->
+    <main class="container">
+
+        <!-- Dashboard -->
+        <section id="dashboard" class="section">
+            <h2>Dashboard</h2>
+            <p class="section-description">
+                Ringkasan informasi pengelolaan lahan dan tanaman.
+            </p>
+
+            <div class="dashboard-cards">
+                <article class="card">
+                    <h3>Total Lahan</h3>
+                    <p id="total-lahan">0</p>
+                    <span>Bidang lahan terdaftar</span>
+                </article>
+
+                <article class="card">
+                    <h3>Total Luas Lahan</h3>
+                    <p><span id="total-luas">0</span> ha</p>
+                    <span>Akumulasi luas lahan</span>
+                </article>
+
+                <article class="card">
+                    <h3>Total Tanaman</h3>
+                    <p id="total-tanaman">0</p>
+                    <span>Data tanaman terdaftar</span>
+                </article>
+            </div>
+        </section>
+
+        <!-- Manajemen Data Lahan -->
+        <section id="data-lahan" class="section">
+            <h2>Manajemen Data Lahan</h2>
+            <p class="section-description">
+                Tambahkan dan kelola informasi lahan pertanian.
+            </p>
+
+            <form id="form-lahan" novalidate>
+                <input type="hidden" id="lahan-id">
+
+                <div class="form-group">
+                    <label for="nama-lahan">Nama Lahan</label>
+                    <input
+                        type="text"
+                        id="nama-lahan"
+                        name="namaLahan"
+                        placeholder="Contoh: Lahan Sawah A"
+                        required
+                    >
+                    <small class="error-message" id="error-nama-lahan"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="lokasi-lahan">Lokasi Lahan</label>
+                    <input
+                        type="text"
+                        id="lokasi-lahan"
+                        name="lokasiLahan"
+                        placeholder="Masukkan lokasi lahan"
+                        required
+                    >
+                    <small class="error-message" id="error-lokasi-lahan"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="luas-lahan">Luas Lahan (hektare)</label>
+                    <input
+                        type="number"
+                        id="luas-lahan"
+                        name="luasLahan"
+                        placeholder="Contoh: 2.5"
+                        min="0.01"
+                        step="any"
+                        required
+                    >
+                    <small class="error-message" id="error-luas-lahan"></small>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" id="btn-simpan-lahan">
+                        Simpan Lahan
+                    </button>
+                    <button type="reset" class="btn-secondary">
+                        Reset
+                    </button>
+                </div>
+
+                <p id="pesan-lahan" class="form-message"
+                   role="status" aria-live="polite"></p>
+            </form>
+
+            <!-- Tabel data lahan -->
+            <div class="table-wrapper">
+                <table>
+                    <caption>Daftar Data Lahan</caption>
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Nama Lahan</th>
+                            <th>Lokasi</th>
+                            <th>Luas (ha)</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="daftar-lahan">
+                        <tr>
+                            <td colspan="5">Belum ada data lahan.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Manajemen Data Tanaman -->
+        <section id="data-tanaman" class="section">
+            <h2>Manajemen Data Tanaman</h2>
+            <p class="section-description">
+                Catat tanaman yang ditanam pada lahan terdaftar.
+            </p>
+
+            <form id="form-tanaman" novalidate>
+                <input type="hidden" id="tanaman-id">
+
+                <div class="form-group">
+                    <label for="nama-tanaman">Nama Tanaman</label>
+                    <input
+                        type="text"
+                        id="nama-tanaman"
+                        name="namaTanaman"
+                        placeholder="Contoh: Padi"
+                        required
+                    >
+                    <small class="error-message" id="error-nama-tanaman"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="jenis-tanaman">Jenis Tanaman</label>
+                    <select id="jenis-tanaman" name="jenisTanaman" required>
+                        <option value="">-- Pilih Jenis Tanaman --</option>
+                        <option value="Pangan">Tanaman Pangan</option>
+                        <option value="Sayuran">Sayuran</option>
+                        <option value="Buah">Buah-buahan</option>
+                        <option value="Perkebunan">Perkebunan</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                    <small class="error-message" id="error-jenis-tanaman"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="lahan-tanaman">Lokasi Lahan</label>
+                    <select id="lahan-tanaman" name="lahanId" required>
+                        <option value="">-- Pilih Lahan --</option>
+                    </select>
+                    <small class="error-message" id="error-lahan-tanaman"></small>
+                    <small class="hint-message" id="hint-lahan-tanaman"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="tanggal-tanam">Tanggal Tanam</label>
+                    <input
+                        type="date"
+                        id="tanggal-tanam"
+                        name="tanggalTanam"
+                        required
+                    >
+                    <small class="error-message" id="error-tanggal-tanam"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="jumlah-tanaman">Jumlah Tanaman (batang)</label>
+                    <input
+                        type="number"
+                        id="jumlah-tanaman"
+                        name="jumlahTanaman"
+                        placeholder="Contoh: 500"
+                        min="1"
+                        step="1"
+                        required
+                    >
+                    <small class="error-message" id="error-jumlah-tanaman"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="status-tanaman">Status Pertumbuhan</label>
+                    <select id="status-tanaman" name="statusTanaman" required>
+                        <option value="">-- Pilih Status --</option>
+                        <option value="Baru Ditanam">Baru Ditanam</option>
+                        <option value="Dalam Perawatan">Dalam Perawatan</option>
+                        <option value="Siap Panen">Siap Panen</option>
+                        <option value="Sudah Dipanen">Sudah Dipanen</option>
+                    </select>
+                    <small class="error-message" id="error-status-tanaman"></small>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" id="btn-simpan-tanaman">
+                        Simpan Tanaman
+                    </button>
+                    <button type="reset" class="btn-secondary">
+                        Reset
+                    </button>
+                </div>
+
+                <p id="pesan-tanaman" class="form-message"
+                   role="status" aria-live="polite"></p>
+            </form>
+
+            <!-- Tabel data tanaman -->
+            <div class="table-wrapper">
+                <table>
+                    <caption>Daftar Data Tanaman</caption>
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Nama Tanaman</th>
+                            <th>Jenis</th>
+                            <th>Lahan</th>
+                            <th>Tanggal Tanam</th>
+                            <th>Jumlah</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="daftar-tanaman">
+                        <tr>
+                            <td colspan="8">Belum ada data tanaman.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 AgriManage - Sistem Manajemen Data Lahan dan Tanaman</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript ES Module -->
+    <script type="module" src="js/main.js"></script>
+
+</body>
+</html>
